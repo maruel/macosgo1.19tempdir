@@ -9,8 +9,17 @@ import (
 
 const code = `package main
 
+import (
+	"fmt"
+	"os"
+)
+
 func main() {
-	panic("oops")
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Running from: %s\n", wd)
 }
 `
 
@@ -33,7 +42,7 @@ func main() {
 			panic(err)
 		}
 	}()
-	fmt.Printf("Running within %s\n", root)
+	fmt.Printf("Created: %s\n", root)
 
 	gopkg := filepath.Join(root, "inner")
 	if err = os.Mkdir(gopkg, 0o700); err != nil {
